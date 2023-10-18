@@ -56,6 +56,13 @@ vi v;
 int m;
 
 
+//NAVIE DP VS OPTIMIZED DP
+// Sometimes, the naive dp solution to a problem might take too long and too much memory. However, sometimes it is worth noting that most of the states can be ignored because they will never be reached and this can reduce your time complexity and memory complexity.
+// Example Problem : 505C - Mr. Kitayuta, the Treasure Hunter
+// So, the most direct way of doing dp would be let dp[i][j] be the number of gems Mr. Kitayuta can collect after he jumps to island i, while the length of his last jump is equal to j. Then, the dp transitions are quite obvious, because we only need to test all possible jumps and take the one that yields maximum results. If you have trouble with the naive dp, you can read the original editorial.
+// However, the naive method is too slow, because it would take O(m2) time and memory. The key observation here is that most of the states will never be visited, more precisiely j can only be in a certain range. These bounds can be obtained by greedily trying to maximize j and minimize j and we can see that their values will always be in the order of  from the initial length of jump. This type of intuition might come in handy to optimize your dp and turn the naive dp into an AC solution.
+
+
 
 
 // map<pair<int,int>,int> dp;
