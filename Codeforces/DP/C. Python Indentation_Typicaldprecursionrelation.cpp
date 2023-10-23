@@ -116,7 +116,10 @@ int searchforanswer(vi x, int n, int k) {
     int n;
     vector<char> v;
 
-int dp[5001][5001][2];
+// int dp[5001][5001][2];
+// above took memory of 197200kB
+int dp[2][5001][2];
+// optimized one took memory of 1100kB
 int solve(int i,int fr,int ns){
     if(fr<0)return 0;
     if(i>=n ) return !ns;
@@ -136,11 +139,32 @@ int solve(int i,int fr,int ns){
     return ans;
 }
 void solve(){
-    mem(dp,-1);
+    // mem(dp,-1); for memonization
+    mem(dp,0); // for bottom up
     cin>>n;
     v.resize(n);
     rep(i,n)cin>>v[i];
-    cout<<solve(0,0,0)<<endl;
+    //  cout<<solve(0,0,0)<<endl;
+    rep(j,n+1){
+        dp[n&1][j][0]=1;
+    }
+
+    for(int i=n-1;i>=0;i--){
+        for(int j=0;j<n;j++){
+            for(int k=1;k>=0;k--){
+                int ans=0;
+
+                if(k==1)
+                    (ans+=dp[(i+1)&1][j+(v[i]=='f')][(v[i]=='f')])%=mod;
+                else{
+                    (ans+=dp[(i+1)&1][j+(v[i]=='f')][(v[i]=='f')])%=mod;
+                    if(j>0)(ans+=dp[i&1][j-1][k])%=mod;
+                }
+                dp[i&1][j][k]=ans;
+            }
+        }
+    }
+    cout<<dp[0][0][0]<<endl;
 }
 
 int32_t main(){
